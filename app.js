@@ -13,9 +13,14 @@ var usersRouter = require('./routes/users');
 var productRouter = require('./routes/productRouter');
 var oderRouter = require('./routes/orderRouter')
 var reviewRouter = require('./routes/reviewRouter')
+var accountRouter = require('./routes/accountRouter')
 
 var app = express();
-
+app.use(session({
+  secret: 'hackerlor@',
+  resave: false,
+  saveUninitialized: true
+}));
 
 // Connect to MongoDB
 const uri = process.env.MONGO_URI;
@@ -36,8 +41,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productRouter);
-app.use('oders', oderRouter);
-app.use('reviews', reviewRouter);
+app.use('/oders', oderRouter);
+app.use('/reviews', reviewRouter);
+app.use('/accounts', accountRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -16,7 +16,7 @@ const orderItemSchema = new Schema({
 
 const orderSchema = new Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
+    account: { type: mongoose.Schema.Types.ObjectId, ref: "account", required: true },
     orderItems: [orderItemSchema],
     shippingAddress: {
       address: String,
