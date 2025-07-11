@@ -24,11 +24,30 @@ exports.getProductById = async (req, res) => {
 // Thêm sản phẩm mới
 exports.createProduct = async (req, res) => {
   try {
-    const product = new Product(req.body);
+    const { name, price, description, brand, sizes, stock, category, images } = req.body;
+
+    // Nếu images là chuỗi, chuyển thành mảng
+    let imageUrls = images;
+    if (typeof images === 'string') {
+      // Nếu là 1 chuỗi, tách theo dấu phẩy
+      imageUrls = images.split(',').map(url => url.trim());
+    }
+
+    const product = new Product({
+      name,
+      price,
+      description,
+      brand,
+      sizes,
+      stock,
+      images: imageUrls, // Lưu mảng link ảnh
+      category,
+    });
+
     await product.save();
     res.status(201).json(product);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ error: err.message });
   }
 };
 
