@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 // Đăng ký tài khoản mới
 exports.register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, isAdmin } = req.body;
 
     // Kiểm tra email đã tồn tại
     const existingAccount = await Account.findOne({ email });
@@ -17,11 +17,12 @@ exports.register = async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Tạo tài khoản mới
+    // Tạo tài khoản mới (cho phép truyền isAdmin khi test)
     const account = new Account({
       name,
       email,
       password: hashedPassword,
+      isAdmin
     });
 
     const savedAccount = await account.save();
@@ -33,7 +34,7 @@ exports.register = async (req, res) => {
         email: savedAccount.email,
         isAdmin: savedAccount.isAdmin,
       },
-      process.env.JWT_SECRET,
+      process.env.SECRET_KEY,
       { expiresIn: "24h" }
     );
 
@@ -76,7 +77,7 @@ exports.login = async (req, res) => {
         email: account.email,
         isAdmin: account.isAdmin,
       },
-      process.env.JWT_SECRET,
+      process.env.SECRET_KEY,
       { expiresIn: "24h" }
     );
 
@@ -190,7 +191,7 @@ exports.refreshToken = async (req, res) => {
     }
 
     // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
     const account = await Account.findById(decoded.id);
 
     if (!account) {
@@ -204,7 +205,7 @@ exports.refreshToken = async (req, res) => {
         email: account.email,
         isAdmin: account.isAdmin,
       },
-      process.env.JWT_SECRET,
+      process.env.SECRET_KEY,
       { expiresIn: "24h" }
     );
 
