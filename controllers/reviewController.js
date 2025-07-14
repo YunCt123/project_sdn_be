@@ -14,7 +14,7 @@ exports.createReview = async (req, res) => {
 // Lấy tất cả review
 exports.getAllReviews = async (req, res) => {
   try {
-    const reviews = await Review.find().populate("user");
+    const reviews = await Review.find().populate("account");
     res.json(reviews);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -24,7 +24,7 @@ exports.getAllReviews = async (req, res) => {
 // Lấy review theo ID
 exports.getReviewById = async (req, res) => {
   try {
-    const review = await Review.findById(req.params.id).populate("user");
+    const review = await Review.findById(req.params.id).populate("account");
     if (!review) return res.status(404).json({ message: "Review not found" });
     res.json(review);
   } catch (error) {

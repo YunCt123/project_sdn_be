@@ -2,11 +2,14 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema(
-
   {
-    account: { type: mongoose.Schema.Types.ObjectId, ref: "account", required: true },
+    account: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "account",
+      required: true,
+    },
     name: String,
-    rating: Number,
+    rating: { type: Number, min: 1, max: 5 },
     comment: String,
   },
   { timestamps: true }
