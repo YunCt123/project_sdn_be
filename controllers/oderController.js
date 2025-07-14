@@ -14,7 +14,7 @@ exports.createOrder = async (req, res) => {
 // Lấy tất cả đơn hàng
 exports.getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find().populate("user").populate("orderItems.product");
+    const orders = await Order.find().populate("account").populate("orderItems.product");
     res.json(orders);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -24,7 +24,7 @@ exports.getAllOrders = async (req, res) => {
 // Lấy đơn hàng theo ID
 exports.getOrderById = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id).populate("user").populate("orderItems.product");
+    const order = await Order.findById(req.params.id).populate("account").populate("orderItems.product");
     if (!order) return res.status(404).json({ message: "Order not found" });
     res.json(order);
   } catch (error) {

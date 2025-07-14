@@ -13,7 +13,7 @@ require("dotenv").config();
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var productRouter = require("./routes/productRouter");
-var oderRouter = require("./routes/orderRouter");
+var orderRouter = require("./routes/orderRouter");
 var reviewRouter = require("./routes/reviewRouter");
 var accountRouter = require("./routes/accountRouter");
 var authRouter = require("./routes/authRouter");
@@ -57,7 +57,7 @@ app.use(
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/products", productRouter);
-app.use("/oders", oderRouter);
+app.use("/orders", orderRouter);
 app.use("/reviews", reviewRouter);
 app.use("/accounts", accountRouter);
 app.use("/auth", authRouter);
