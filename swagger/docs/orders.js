@@ -4,19 +4,18 @@
  *   schemas:
  *     OrderItem:
  *       type: object
+ *       required:
+ *         - product
+ *         - price
+ *         - qty
  *       properties:
- *         name:
- *           type: string
- *         qty:
- *           type: number
- *         size:
- *           type: string
- *         image:
- *           type: string
- *         price:
- *           type: number
  *         product:
  *           type: string
+ *           description: ObjectId reference to product
+ *         price:
+ *           type: number
+ *         qty:
+ *           type: number
  *     Order:
  *       type: object
  *       required: [account, orderItems]
@@ -64,7 +63,7 @@
  *           type: string
  *           default: "Pending"
  *
- * /oders/orders:
+ * /orders:
  *   get:
  *     summary: Get all orders
  *     tags: [Orders]
@@ -90,7 +89,7 @@
  *       201:
  *         description: Order created successfully
  *
- * /oders/orders/{id}:
+ * /orders/{id}:
  *   get:
  *     summary: Get order by ID
  *     tags: [Orders]
@@ -116,7 +115,7 @@
  *       200:
  *         description: Order deleted successfully
  *
- * /oders/orders/{id}/pay:
+ * /orders/{id}/pay:
  *   put:
  *     summary: Update order to paid
  *     tags: [Orders]
@@ -130,7 +129,7 @@
  *       200:
  *         description: Order updated to paid
  *
- * /oders/orders/{id}/deliver:
+ * /orders/{id}/deliver:
  *   put:
  *     summary: Update order to delivered
  *     tags: [Orders]

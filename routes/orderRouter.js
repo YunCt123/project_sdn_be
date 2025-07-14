@@ -1,39 +1,39 @@
 const express = require("express");
-const oderRouter = express.Router();
+const orderRouter = express.Router();
 const orderController = require("../controllers/oderController");
 const { verifyToken } = require("../middleware/auth");
 
 // Order routes - All protected with authentication
-oderRouter.post("/orders", verifyToken, orderController.createOrder);
-oderRouter.get("/orders", verifyToken, orderController.getAllOrders);
-oderRouter.get("/orders/:id", verifyToken, orderController.getOrderById);
-oderRouter.put(
-  "/orders/:id/pay",
+orderRouter.post("/", verifyToken, orderController.createOrder);
+orderRouter.get("/", verifyToken, orderController.getAllOrders);
+orderRouter.get("/:id", verifyToken, orderController.getOrderById);
+orderRouter.put(
+  "/:id/pay",
   verifyToken,
   orderController.updateOrderToPaid
 );
-oderRouter.put(
-  "/orders/:id/deliver",
+orderRouter.put(
+  "/:id/deliver",
   verifyToken,
   orderController.updateOrderToDelivered
 );
-oderRouter.delete("/orders/:id", verifyToken, orderController.deleteOrder);
+orderRouter.delete("/:id", verifyToken, orderController.deleteOrder);
 
 // Order item routes - All protected with authentication
-oderRouter.post(
-  "/orders/:orderId/items",
+orderRouter.post(
+  "/:orderId/items",
   verifyToken,
   orderController.addOrderItem
 );
-oderRouter.put(
-  "/orders/:orderId/items/:itemId",
+orderRouter.put(
+  "/:orderId/items/:itemId",
   verifyToken,
   orderController.updateOrderItem
 );
-oderRouter.delete(
-  "/orders/:orderId/items/:itemId",
+orderRouter.delete(
+  "/:orderId/items/:itemId",
   verifyToken,
   orderController.deleteOrderItem
 );
 
-module.exports = oderRouter;
+module.exports = orderRouter;

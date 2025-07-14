@@ -2,16 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const orderItemSchema = new Schema({
-  name: String,
-  qty: Number,
-  size: String,
-  image: String,
-  price: Number,
   product: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "product",
     required: true,
   },
+  price: { type: Number, required: true },
+  qty: { type: Number, required: true },
 });
 
 const orderSchema = new Schema(
