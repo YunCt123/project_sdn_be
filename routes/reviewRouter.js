@@ -1,12 +1,12 @@
-const express = require('express');
+const express = require("express");
 const reviewRouter = express.Router();
-const reviewController = require('../controllers/reviewController');
-
+const reviewController = require("../controllers/reviewController");
+const { verifyToken } = require("../middleware/auth");
 // Review routes
-reviewRouter.post('/reviews', reviewController.createReview);
-reviewRouter.get('/reviews', reviewController.getAllReviews);
-reviewRouter.get('/reviews/:id', reviewController.getReviewById);
-reviewRouter.put('/reviews/:id', reviewController.updateReview);
-reviewRouter.delete('/reviews/:id', reviewController.deleteReview);
+reviewRouter.post("/", verifyToken, reviewController.createReview);
+reviewRouter.get("/", reviewController.getAllReviews);
+reviewRouter.get("/:id", reviewController.getReviewById);
+reviewRouter.put("/:id", verifyToken, reviewController.updateReview);
+reviewRouter.delete("/:id", verifyToken, reviewController.deleteReview);
 
 module.exports = reviewRouter;
