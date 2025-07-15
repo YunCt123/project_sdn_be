@@ -58,7 +58,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/products", productRouter);
 app.use("/orders", orderRouter);
-app.use("/reviews", reviewRouter);
+// app.use("/reviews", reviewRouter);
 app.use("/accounts", accountRouter);
 app.use("/auth", authRouter);
 

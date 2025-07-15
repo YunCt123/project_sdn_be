@@ -3,8 +3,16 @@ const Review = require("../models/review");
 // Tạo review mới
 exports.createReview = async (req, res) => {
   try {
+    const productId = req.params.productId;
     const review = new Review(req.body);
     const savedReview = await review.save();
+    // Thêm review vào product
+    const Product = require("../models/product");
+    await Product.findByIdAndUpdate(
+      productId,
+      { $push: { review: savedReview._id } },
+      { new: true }
+    );
     res.status(201).json(savedReview);
   } catch (error) {
     res.status(400).json({ message: error.message });
