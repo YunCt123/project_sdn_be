@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var cors = require("cors");
 
 const mongoose = require("mongoose");
 const session = require("express-session");
@@ -17,15 +18,15 @@ var orderRouter = require("./routes/orderRouter");
 var reviewRouter = require("./routes/reviewRouter");
 var accountRouter = require("./routes/accountRouter");
 var authRouter = require("./routes/authRouter");
-
 var app = express();
-app.use(
-  session({
-    secret: "hackerlor@",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+
+// CORS configuration
+app.use(cors({
+  origin: 'http://localhost:5173', // Vite default port, adjust if different
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Connect to MongoDB
 const uri = process.env.MONGO_URI;

@@ -1,12 +1,23 @@
-const express = require('express');
+const express = require("express");
 const accountRouter = express.Router();
-const accountController = require('../controllers/accountController');
+const accountController = require("../controllers/accountController");
+const { verifyTokenAndAdmin } = require("../middleware/auth");
 
-// Account routes
-accountRouter.post('/', accountController.createAccount);
-accountRouter.get('/', accountController.getAllAccounts);
-accountRouter.get('/:id', accountController.getAccountById);
-accountRouter.put('/:id', accountController.updateAccount);
-accountRouter.delete('/:id', accountController.deleteAccount);
+// Admin quản lý tài khoản
+accountRouter.post("/", verifyTokenAndAdmin, accountController.createAccount);
+accountRouter.get("/", verifyTokenAndAdmin, accountController.getAllAccounts);
+accountRouter.get(
+  "/:id",
+  verifyTokenAndAdmin,
+  accountController.getAccountById
+);
+
+accountRouter.put("/:id", verifyTokenAndAdmin, accountController.updateAccount);
+
+accountRouter.delete(
+  "/:id",
+  verifyTokenAndAdmin,
+  accountController.deleteAccount
+);
 
 module.exports = accountRouter;

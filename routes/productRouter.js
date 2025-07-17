@@ -15,20 +15,23 @@ productRouter.get("/:id", productController.getProductById);
 // productRouter.post("/",verifyTokenAndAdmin, productController.createProduct);
 
 // Cập nhật sản phẩm
-productRouter.put("/:id",verifyTokenAndAdmin, productController.updateProduct);
+productRouter.put("/:id", verifyTokenAndAdmin, productController.updateProduct);
 
 // Xóa sản phẩm
-productRouter.delete("/:id",verifyTokenAndAdmin, productController.deleteProduct);
+productRouter.delete(
+  "/:id",
+  verifyTokenAndAdmin,
+  productController.deleteProduct
+);
 
 // Route tạo sản phẩm mới, upload 1 ảnh
 productRouter.post('/',verifyTokenAndAdmin, productController.createProduct);
 
-// Review endpoints lồng trong product
-productRouter.get('/:productId/reviews', reviewController.getAllReviews);
-productRouter.post('/:productId/reviews', verifyToken, reviewController.createReview);
-productRouter.get('/:productId/reviews/:reviewId', reviewController.getReviewById);
-productRouter.put('/:productId/reviews/:reviewId', verifyToken, reviewController.updateReview);
-productRouter.delete('/:productId/reviews/:reviewId', verifyToken, reviewController.deleteReview);
-
+// Route cho admin lấy danh sách sản phẩm (có thể thêm filter nâng cao sau này)
+productRouter.get(
+  "/admin/all",
+  verifyTokenAndAdmin,
+  productController.getAllProducts
+);
 
 module.exports = productRouter;
