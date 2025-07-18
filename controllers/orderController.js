@@ -14,17 +14,21 @@ exports.createOrder = async (req, res) => {
 // Lấy tất cả đơn hàng
 exports.getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find().populate("account").populate("orderItems.product");
+    const orders = await Order.find()
+      .populate("account")
+      .populate("orderItems.product");
     res.json(orders);
   } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  res.status(500).json({ message: error.message });
+}
 };
 
 // Lấy đơn hàng theo ID
 exports.getOrderById = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id).populate("account").populate("orderItems.product");
+    const order = await Order.findById(req.params.id)
+      .populate("account")
+      .populate("orderItems.product");
     if (!order) return res.status(404).json({ message: "Order not found" });
     res.json(order);
   } catch (error) {
@@ -115,5 +119,21 @@ exports.deleteOrderItem = async (req, res) => {
     res.json(updatedOrder);
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+// Lấy đơn hàng của user hiện tại
+exports.getOrdersByCurrentUser = async (req, res) => {
+  try {
+    const userId = req.user._id || req.user.id;
+    console.log("Current userId for orders:", userId);
+    const orders = await Order.find({ account: userId }).populate(
+      "orderItems.product"
+    );
+    console.log("Orders found for user:", orders.length);
+    res.json(orders);
+  } catch (error) {
+    console.error("Error in getOrdersByCurrentUser:", error);
+    res.status(500).json({ message: error.message });
   }
 };

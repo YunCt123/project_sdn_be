@@ -61,12 +61,14 @@ exports.login = async (req, res) => {
     // Kiểm tra tài khoản tồn tại
     const account = await Account.findOne({ email });
     if (!account) {
+      console.log(`[LOGIN FAIL] Email not found: ${email}`);
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
     // Kiểm tra mật khẩu
     const isPasswordValid = await bcrypt.compare(password, account.password);
     if (!isPasswordValid) {
+      console.log(`[LOGIN FAIL] Wrong password for email: ${email}`);
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
@@ -88,6 +90,8 @@ exports.login = async (req, res) => {
         id: account._id,
         name: account.name,
         email: account.email,
+        phone: account.phone,
+        address: account.address,
         isAdmin: account.isAdmin,
       },
     });

@@ -1,7 +1,11 @@
 const express = require("express");
 const orderRouter = express.Router();
-const orderController = require("../controllers/oderController");
+// Sửa lại tên file controller cho đúng với tên file thực tế
+const orderController = require("../controllers/orderController");
 const { verifyToken, verifyTokenAndAdmin } = require("../middleware/auth");
+
+// Route cho user lấy đơn hàng của chính mình (phải đặt trước /:id)
+orderRouter.get("/my", verifyToken, orderController.getOrdersByCurrentUser);
 
 // Order routes - All protected with authentication
 orderRouter.post("/", verifyToken, orderController.createOrder);
