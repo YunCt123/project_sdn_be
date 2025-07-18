@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const orderItemSchema = new Schema({
+  account: { type: mongoose.Schema.Types.ObjectId, ref: "account", required: true },
   product: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "product",
@@ -9,6 +10,7 @@ const orderItemSchema = new Schema({
   },
   price: { type: Number, required: true },
   qty: { type: Number, required: true },
+  size: { type: String, required: true }
 });
 
 const orderSchema = new Schema(

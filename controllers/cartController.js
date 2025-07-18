@@ -21,7 +21,7 @@ exports.addToCart = async (req, res) => {
       await item.save();
       return res.json(item);
     }
-    item = new OrderItem({ account: req.user.id, product, price, qty, size });
+    item = new OrderItem({ account: req.user.id, product, price, qty, size  });
     await item.save();
     res.status(201).json(item);
   } catch (error) {
