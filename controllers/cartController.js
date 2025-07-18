@@ -1,10 +1,10 @@
 
-const { CartItem } = require("../models/order");
+const { OrderItem } = require("../models/order");
 
 // Lấy tất cả cart item của user
 exports.getCart = async (req, res) => {
   try {
-    const cart = await CartItem.find({ account: req.user.id }).populate("product");
+    const cart = await OrderItem.find({ account: req.user.id }).populate("product");
     res.json(cart);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -15,13 +15,13 @@ exports.getCart = async (req, res) => {
 exports.addToCart = async (req, res) => {
   try {
     const { product, price, qty, size } = req.body;
-    let item = await CartItem.findOne({ account: req.user.id, product, size });
+    let item = await OrderItem.findOne({ account: req.user.id, product, size });
     if (item) {
       item.qty += qty;
       await item.save();
       return res.json(item);
     }
-    item = new CartItem({ account: req.user.id, product, price, qty, size });
+    item = new OrderItem({ account: req.user.id, product, price, qty, size });
     await item.save();
     res.status(201).json(item);
   } catch (error) {
@@ -34,7 +34,7 @@ exports.updateCartItem = async (req, res) => {
   try {
     const { id } = req.params;
     const { qty } = req.body;
-    const item = await CartItem.findOneAndUpdate(
+    const item = await OrderItem.findOneAndUpdate(
       { _id: id, account: req.user.id },
       { qty },
       { new: true }
@@ -50,7 +50,7 @@ exports.updateCartItem = async (req, res) => {
 exports.deleteCartItem = async (req, res) => {
   try {
     const { id } = req.params;
-    await CartItem.deleteOne({ _id: id, account: req.user.id });
+    await OrderItem.deleteOne({ _id: id, account: req.user.id });
     res.json({ message: "Deleted" });
   } catch (error) {
     res.status(400).json({ message: error.message });
