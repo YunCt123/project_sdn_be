@@ -22,7 +22,7 @@ exports.register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      isAdmin
+      isAdmin,
     });
 
     const savedAccount = await account.save();
@@ -112,7 +112,7 @@ exports.getProfile = async (req, res) => {
 // Cập nhật profile
 exports.updateProfile = async (req, res) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, phone, address, gender, dateOfBirth } = req.body;
     const accountId = req.user.id;
 
     // Kiểm tra email đã tồn tại (nếu thay đổi email)
@@ -126,9 +126,18 @@ exports.updateProfile = async (req, res) => {
       }
     }
 
+    // Gom các trường cần cập nhật
+    const updateData = {};
+    if (name !== undefined) updateData.name = name;
+    if (email !== undefined) updateData.email = email;
+    if (phone !== undefined) updateData.phone = phone;
+    if (address !== undefined) updateData.address = address;
+    if (gender !== undefined) updateData.gender = gender;
+    if (dateOfBirth !== undefined) updateData.dateOfBirth = dateOfBirth;
+
     const updatedAccount = await Account.findByIdAndUpdate(
       accountId,
-      { name, email },
+      updateData,
       { new: true }
     ).select("-password");
 

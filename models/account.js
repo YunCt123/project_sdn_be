@@ -19,9 +19,27 @@ const accountSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    phone: {
+      type: String,
+      default: "",
+    },
+    address: {
+      type: String,
+      default: "",
+    },
+    gender: {
+      type: String,
+      enum: ["male", "female", "other"],
+      default: "other",
+    },
+    dateOfBirth: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );
+
+
 
 const Account = mongoose.model("account", accountSchema);
 module.exports = Account;

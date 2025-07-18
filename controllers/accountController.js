@@ -32,24 +32,35 @@ exports.getAccountById = async (req, res) => {
   }
 };
 
-// Cập nhật account (chỉ cho phép update name, email, isAdmin)
+// Cập nhật account (cho phép update các trường mới, trừ password)
 exports.updateAccount = async (req, res) => {
   try {
-    const allowedFields = ["name", "email", "isAdmin"];
+    const allowedFields = [
+      "name",
+      "email",
+      "isAdmin",
+      "phone",
+      "address",
+      "gender",
+      "dateOfBirth",
+    ];
     const updateData = {};
-    allowedFields.forEach(field => {
+    allowedFields.forEach((field) => {
       if (req.body[field] !== undefined) updateData[field] = req.body[field];
     });
-    const account = await Account.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true }
-    );
+    const account = await Account.findByIdAndUpdate(req.params.id, updateData, {
+      new: true,
+    });
     if (!account) return res.status(404).json({ message: "Account not found" });
     res.json(account);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
+};
+
+// Cập nhật thông tin cá nhân cho chính user
+exports.updateAccountByUser = async (userId, updateData) => {
+  return await Account.findByIdAndUpdate(userId, updateData, { new: true });
 };
 
 // Xóa account

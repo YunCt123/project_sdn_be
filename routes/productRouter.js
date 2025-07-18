@@ -27,9 +27,9 @@ productRouter.delete(
 // Route tạo sản phẩm mới, upload 1 ảnh
 productRouter.post('/',verifyTokenAndAdmin, productController.createProduct);
 
-// Route cho admin lấy danh sách sản phẩm (có thể thêm filter nâng cao sau này)
+// Route cho admin lấy danh sách sản phẩm 
 productRouter.get(
-  "/admin/all",
+  "/admin/allProducts",
   verifyTokenAndAdmin,
   productController.getAllProducts
 );
