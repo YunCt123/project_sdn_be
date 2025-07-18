@@ -1,5 +1,5 @@
 
-const { CartItem } = require("../models/cartItem");
+const { CartItem } = require("../models/order");
 
 // Lấy tất cả cart item của user
 exports.getCart = async (req, res) => {

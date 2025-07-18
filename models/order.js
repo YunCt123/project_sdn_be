@@ -17,12 +17,8 @@ const orderSchema = new Schema(
     orderItems: [orderItemSchema],
     shippingAddress: {
       address: String,
-      city: String,
-      postalCode: String,
-      country: String,
     },
     paymentMethod: String,
-    itemsPrice: Number,
     shippingPrice: Number,
     totalPrice: Number,
     isPaid: { type: Boolean, default: false },
