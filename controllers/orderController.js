@@ -76,52 +76,6 @@ exports.deleteOrder = async (req, res) => {
   }
 };
 
-// Thêm một item vào đơn hàng
-exports.addOrderItem = async (req, res) => {
-  try {
-    const { orderId } = req.params;
-    const order = await Order.findById(orderId);
-    if (!order) return res.status(404).json({ message: "Order not found" });
-    order.orderItems.push(req.body);
-    const updatedOrder = await order.save();
-    res.status(201).json(updatedOrder);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-// Sửa một item trong đơn hàng
-exports.updateOrderItem = async (req, res) => {
-  try {
-    const { orderId, itemId } = req.params;
-    const order = await Order.findById(orderId);
-    if (!order) return res.status(404).json({ message: "Order not found" });
-    const item = order.orderItems.id(itemId);
-    if (!item) return res.status(404).json({ message: "Order item not found" });
-    Object.assign(item, req.body);
-    const updatedOrder = await order.save();
-    res.json(updatedOrder);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
-// Xóa một item khỏi đơn hàng
-exports.deleteOrderItem = async (req, res) => {
-  try {
-    const { orderId, itemId } = req.params;
-    const order = await Order.findById(orderId);
-    if (!order) return res.status(404).json({ message: "Order not found" });
-    const item = order.orderItems.id(itemId);
-    if (!item) return res.status(404).json({ message: "Order item not found" });
-    item.remove();
-    const updatedOrder = await order.save();
-    res.json(updatedOrder);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
 // Lấy đơn hàng của user hiện tại
 exports.getOrdersByCurrentUser = async (req, res) => {
   try {

@@ -19,18 +19,6 @@ orderRouter.put(
 );
 orderRouter.delete("/:id", verifyToken, orderController.deleteOrder);
 
-// Order item routes - All protected with authentication
-orderRouter.post("/:orderId/items", verifyToken, orderController.addOrderItem);
-orderRouter.put(
-  "/:orderId/items/:itemId",
-  verifyToken,
-  orderController.updateOrderItem
-);
-orderRouter.delete(
-  "/:orderId/items/:itemId",
-  verifyToken,
-  orderController.deleteOrderItem
-);
 
 // Route cho admin xem tất cả đơn hàng của mọi user
 orderRouter.get(

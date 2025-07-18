@@ -18,6 +18,7 @@ var orderRouter = require("./routes/orderRouter");
 var reviewRouter = require("./routes/reviewRouter");
 var accountRouter = require("./routes/accountRouter");
 var authRouter = require("./routes/authRouter");
+var cartRouter = require("./routes/cartRouter");
 var app = express();
 
 // CORS configuration
@@ -59,6 +60,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/products", productRouter);
 app.use("/orders", orderRouter);
+app.use("/cart", cartRouter);
 // app.use("/reviews", reviewRouter);
 app.use("/accounts", accountRouter);
 app.use("/auth", authRouter);
