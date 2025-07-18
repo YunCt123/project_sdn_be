@@ -19,8 +19,8 @@ exports.getAllOrders = async (req, res) => {
       .populate("orderItems.product");
     res.json(orders);
   } catch (error) {
-  res.status(500).json({ message: error.message });
-}
+    res.status(500).json({ message: error.message });
+  }
 };
 
 // Lấy đơn hàng theo ID
@@ -88,6 +88,21 @@ exports.getOrdersByCurrentUser = async (req, res) => {
     res.json(orders);
   } catch (error) {
     console.error("Error in getOrdersByCurrentUser:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Cập nhật trạng thái đơn hàng (admin chỉnh sửa bất kỳ trạng thái)
+exports.updateOrderStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const order = await Order.findById(req.params.id);
+    if (!order) return res.status(404).json({ message: "Order not found" });
+    if (status) order.status = status;
+    // Nếu có các trường khác muốn chỉnh sửa, có thể thêm vào đây
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };

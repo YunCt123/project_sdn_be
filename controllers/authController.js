@@ -91,6 +91,7 @@ exports.login = async (req, res) => {
         name: account.name,
         email: account.email,
         phone: account.phone,
+        gender: account.gender,
         address: account.address,
         isAdmin: account.isAdmin,
       },

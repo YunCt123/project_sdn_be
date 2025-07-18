@@ -27,4 +27,11 @@ orderRouter.get(
   orderController.getAllOrders
 );
 
+// Route cho admin chỉnh sửa trạng thái đơn hàng
+orderRouter.put(
+  "/admin/:id/status",
+  verifyTokenAndAdmin,
+  orderController.updateOrderStatus
+);
+
 module.exports = orderRouter;
