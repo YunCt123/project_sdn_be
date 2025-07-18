@@ -31,9 +31,9 @@ const orderSchema = new Schema(
 );
 
 const Order = mongoose.model("order", orderSchema);
-const OderItem = mongoose.model("orderItem", orderItemSchema);
+const OrderItem = mongoose.model("orderItem", orderItemSchema);
 module.exports = {
   Order,
-  OderItem,
+  OrderItem,
 };
 
